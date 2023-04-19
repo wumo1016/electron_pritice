@@ -9,7 +9,10 @@
     "description": "Hello World!",
     "main": "main.js",
     "author": "wumo1016",
-    "license": "MIT"
+    "license": "MIT",
+    "scripts": {
+      "start": "electron ."
+    }
   }
   ```
 - `yarn add electron --dev`
@@ -18,6 +21,9 @@
     - index.js
   - renderer 目录: 存放跟渲染进程相关的代码
     - index.html
+- 启动
+  - `npm start`
+  - package.json 中的 main 对应入口文件
 
 ## Electron 介绍
 
