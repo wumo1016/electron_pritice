@@ -9,4 +9,6 @@ app.whenReady().then(() => {
     titleBarStyle: 'hiddenInset'
   })
   win.loadFile(path.join(__dirname, '../renderer/index.html'))
+  // 打开调试控制台
+  win.webContents.openDevTools()
 })
