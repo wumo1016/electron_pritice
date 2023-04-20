@@ -1,9 +1,10 @@
 const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
 let mainWindow,
   urlParams = {}
 
-const protocol = 'juejin'
+const protocol = 'zhufeng'
 const scheme = `${protocol}://`
 app.setAsDefaultProtocolClient(protocol)
 
@@ -21,7 +22,8 @@ function createWindow() {
     mainWindow.setSize(width, height)
   } else {
     mainWindow = new BrowserWindow({ width, height })
-    mainWindow.loadURL('https://www.juejin.cn')
+    mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
+    // mainWindow.loadURL('https://www.juejin.cn')
   }
 }
 
