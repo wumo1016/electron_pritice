@@ -30,6 +30,10 @@
 - 有主进程和渲染进程
   - 主进程: 用 node.js 调用 Electron 封装好的 API 来创建窗口, 管理应用的整个生命周期
   - 渲染进程: 加载传统的 web 界面
+- 自定义协议
+  - setAsDefaultProtocolClient: 设置协议
+  - isDefaultProtocolClient: 查询状态
+  - removeAsDefaultProtocolClient: 删除协议
 
 ## 其他
 
