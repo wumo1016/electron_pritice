@@ -21,9 +21,21 @@ function createWindow() {
   if (mainWindow) {
     mainWindow.setSize(width, height)
   } else {
-    mainWindow = new BrowserWindow({ width, height })
+    mainWindow = new BrowserWindow({
+      width,
+      height,
+      webPreferences: {
+        nodeIntegration: false, // 是否开启node.js 环境集成(不建议开启)
+        contextIsolation: true, // 是否启用上下文隔离(默认启用 mpreload.js 脚本和 index.html 是否共享相同的 document 和 window 对象)(如果开启了就可以在浏览器的控制台的top下拉中看到)
+        sandbox: false,
+        preload: path.join(__dirname, '../preload/index.js') // 预加载脚本
+      }
+    })
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
     // mainWindow.loadURL('https://www.juejin.cn')
+
+    // 打开调试控制台
+    mainWindow.webContents.openDevTools()
   }
 }
 
@@ -35,6 +47,7 @@ function handleSchemeWakeup(argv) {
   urlParams = Object.fromEntries(searchParams.entries())
   if (app.isReady()) createWindow()
 }
+
 // 保持单实例
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {

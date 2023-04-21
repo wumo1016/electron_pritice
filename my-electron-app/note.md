@@ -34,6 +34,8 @@
   - setAsDefaultProtocolClient: 设置协议
   - isDefaultProtocolClient: 查询状态
   - removeAsDefaultProtocolClient: 删除协议
+- preload 脚本
+  - preload 脚本可以访问 node 的全部 api 和 electron 提供的渲染进程 api
 
 ## 其他
 
