@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('release').append(release)
 })
 
+// contextBridge 仅在 contextIsolation 为 true 时可使用
 contextBridge.exposeInMainWorld('myAPI', {
   saveFile: () => {
     console.log('doSomething')

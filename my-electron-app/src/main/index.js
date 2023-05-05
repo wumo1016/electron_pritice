@@ -33,13 +33,16 @@ function createWindow() {
     })
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
     // mainWindow.loadURL('https://www.juejin.cn')
-
     // 打开调试控制台
     mainWindow.webContents.openDevTools()
   }
 }
 
-// 处理 Scheme 唤醒
+/**
+ * @Author: wyb
+ * @Descripttion: 处理 Scheme 唤醒
+ * @param {*} argv
+ */
 function handleSchemeWakeup(argv) {
   const url = [].concat(argv).find(v => v.startsWith(scheme))
   if (!url) return
@@ -48,7 +51,10 @@ function handleSchemeWakeup(argv) {
   if (app.isReady()) createWindow()
 }
 
-// 保持单实例
+/**
+ * @Author: wyb
+ * @Descripttion: 保持单例
+ */
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
   app.quit()
