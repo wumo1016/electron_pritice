@@ -3,20 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <title>Electron Desktop</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #abe3f1;
+        -webkit-app-region: drag;
+      }
+      img {
+        width: 200px;
+      }
+      h1 {
+        margin: 50px;
+      }
+    </style>
   </head>
 
   <body>
-    <div>
-      <input type="text" placeholder="请输入保存路径" />
-    </div>
-    <div>
-      <textarea placeholder="请输入文本内容"></textarea>
-    </div>
-    <button onclick="save()">保存</button>
-    <script>
-      function save() {
-        myAPI.saveFile()
-      }
-    </script>
+    <img src="https://img.zlib.cn/electron.webp" />
+    <h1>Electron 实战训练营</h1>
   </body>
 </html>
