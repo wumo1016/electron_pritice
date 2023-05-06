@@ -26,6 +26,7 @@ function createWindow() {
  * @Author: wyb
  * @Descripttion: 订阅事件
  */
-ipcMain.handle('setTheme', (_, theme) => {
+ipcMain.on('setTheme', (event, theme) => {
   nativeTheme.themeSource = theme
+  event.reply('setTheme', '设置样式啦')
 })
