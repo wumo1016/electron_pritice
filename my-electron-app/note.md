@@ -75,13 +75,11 @@ ipcRenderer.on('isDarkMode', (event, value) => {
 
 ```js
 // 主进程
-ipcMain.handle('isDarkMode', (event, args) => {
-  return nativeTheme.shouldUseDarkColors
+ipcMain.handle('eventName', (_, arg1, arg2) => {
+  console.log(arg1, arg2)
 })
-// 渲染进程
-ipcRenderer
-  .invoke('isDarkMode')
-  .then(value => console.log('invoke reply', value))
+// 渲染进程 (可在 preload.js 中定义)
+ipcRenderer.invoke('eventName', arg1, arg2)
 ```
 
 ## 其他
