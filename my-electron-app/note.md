@@ -27,15 +27,62 @@
 
 ## Electron 介绍
 
-- 有主进程和渲染进程
-  - 主进程: 用 node.js 调用 Electron 封装好的 API 来创建窗口, 管理应用的整个生命周期
-  - 渲染进程: 加载传统的 web 界面
+- 进程
+  - Electron(主进程): 必有。
+    - 负责界面显示、用户交互、子进程管理，控制应用程序的地址栏、书签，前进/后退按钮等，同时提供存储等功能
+    - 用 node.js 调用 Electron 封装好的 API 来创建窗口, 管理应用的整个生命周期
+  - Electron Helper(网络服务): 必有。负责页面的网络资源加载
+  - Electron Helper(GPU)(GPU 渲染): 必有。负责 GPU 渲染
+  - Electron Helper(Renderer)(渲染进程): 负责网页排版和交互（排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中）
+    - 无法直接调用主进程
+  - Electron Helper(Plugin)(插件进程): 负责插件的渲染
 - 自定义协议
   - setAsDefaultProtocolClient: 设置协议
   - isDefaultProtocolClient: 查询状态
   - removeAsDefaultProtocolClient: 删除协议
 - preload 脚本
   - preload 脚本可以访问 node 的全部 api 和 electron 提供的渲染进程 api
+
+## 三种进程通信方式
+
+- sendSync & returnValue
+
+```js
+// 主进程
+ipcMain.on('isDarkMode', (event, args) => {
+  event.returnValue = nativeTheme.shouldUseDarkColors
+})
+// 渲染进程
+const value = ipcRenderer.sendSync('isDarkMode')
+console.log('sendSync reply', value)
+```
+
+- send & reply (推荐)
+
+```js
+// 主进程
+ipcMain.on('isDarkMode', (event, args) => {
+  event.reply('isDarkMode', nativeTheme.shouldUseDarkColors)
+})
+// 渲染进程
+ipcRenderer.send('isDarkMode')
+ipcRenderer.on('isDarkMode', (event, value) => {
+  console.log('on reply', value)
+})
+```
+
+- invoke & handle (推荐)
+
+```js
+// 主进程
+ipcMain.handle('isDarkMode', (event, args) => {
+  return nativeTheme.shouldUseDarkColors
+})
+// 渲染进程
+ipcRenderer
+  .invoke('isDarkMode')
+  .then(value => console.log('invoke reply', value))
+```
 
 ## 其他
 

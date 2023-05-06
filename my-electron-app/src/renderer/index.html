@@ -3,21 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Electron Desktop</title>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <h5><span id="platform"></span> - <span id="release"></span></h5>
-    <div>
-      <input type="text" placeholder="请输入保存路径" />
-    </div>
-    <div>
-      <textarea placeholder="请输入文本内容"></textarea>
-    </div>
-    <button onclick="save()">保存</button>
-    <script>
-      function save() {
-        myAPI.saveFile()
-      }
-    </script>
+    <button onclick="preloadApi.setTheme('light')">设置浅色</button>
+    <button onclick="preloadApi.setTheme('dark')">设置深色</button>
   </body>
 </html>
