@@ -43,6 +43,20 @@
 - preload 脚本
   - preload 脚本可以访问 node 的全部 api 和 electron 提供的渲染进程 api
 
+## API
+
+- 主进程
+  - BrowserWindow
+    - options
+      - width
+      - height
+      - titleBarStyle: 标题栏 - hiddenInset(隐藏)
+    - 实例方法
+      - loadURL: 加载指定网站
+      - loadFile: 加载本地文件
+      - setIgnoreMouseEvents: 设置忽略鼠标事件
+- 渲染进程
+
 ## 三种进程通信方式
 
 - sendSync & returnValue
