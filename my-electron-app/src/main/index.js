@@ -13,7 +13,7 @@ function createWindow() {
     width: 800,
     height: 600,
     frame: false, // 不显示应用边框
-    transparent: true, // 设置应用背景透明
+    // transparent: true, // 设置应用背景透明
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -21,10 +21,26 @@ function createWindow() {
       preload: path.join(__dirname, '../preload/index.js')
     }
   })
-  mainWindow.loadFile(path.join(__dirname, '../renderer/clock.html'))
-  // mainWindow.webContents.openDevTools()
+  mainWindow.loadFile(path.join(__dirname, '../renderer/traffic.html'))
+  mainWindow.webContents.openDevTools()
 }
 
 ipcMain.on('set-ignore-mouse-events', (event, ...args) => {
   BrowserWindow.fromWebContents(event.sender).setIgnoreMouseEvents(...args)
+})
+
+ipcMain.on('set-window-events', (event, type) => {
+  switch (type) {
+    case 'close':
+      mainWindow.close()
+      break
+    case 'minus':
+      mainWindow.minimize()
+      break
+    case 'stretching':
+      mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize()
+      break
+    default:
+      break
+  }
 })

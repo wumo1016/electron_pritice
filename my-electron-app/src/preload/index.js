@@ -10,4 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-contextBridge.exposeInMainWorld('preloadApi', {})
+contextBridge.exposeInMainWorld('preloadApi', {
+  setWindow(...args) {
+    ipcRenderer.send('set-window-events', ...args)
+  }
+})
