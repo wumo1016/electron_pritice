@@ -96,6 +96,13 @@ ipcMain.handle('eventName', (_, arg1, arg2) => {
 ipcRenderer.invoke('eventName', arg1, arg2)
 ```
 
+## 四种原生菜单
+
+- 窗口菜单
+- 上下文菜单
+- 托盘菜单
+- Dock 菜单(mac os 专属)
+
 ## 其他
 
 - node 版本 16.15.1

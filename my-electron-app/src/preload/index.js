@@ -1,17 +1,16 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-document.addEventListener('DOMContentLoaded', () => {
-  const clock = document.getElementById('clock')
-  clock.addEventListener('mouseenter', () => {
-    ipcRenderer.send('set-ignore-mouse-events', false)
-  })
-  clock.addEventListener('mouseleave', () => {
-    ipcRenderer.send('set-ignore-mouse-events', true, { forward: true })
-  })
+contextBridge.exposeInMainWorld('preloadApi', {
+  openMenu() {
+    ipcRenderer.send('open-menu')
+  }
 })
 
-contextBridge.exposeInMainWorld('preloadApi', {
-  setWindow(...args) {
-    ipcRenderer.send('set-window-events', ...args)
+ipcRenderer.on('set-menu', (event, value) => {
+  if (value === 'bold') {
+    const button = document.querySelector('#button')
+    button.style.fontWeight = 'bold'
+  } else if (value === 'color') {
+    button.style.color = 'blue'
   }
 })
