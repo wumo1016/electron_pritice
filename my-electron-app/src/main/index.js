@@ -44,6 +44,10 @@ app.whenReady().then(() => {
   tray = new Tray(path.join(__dirname, '../images/phoneTemplate.png'))
   tray.setContextMenu(contextMenu) // 设置托盘菜单
   tray.setToolTip('我是一个小提示呀') // 设置托盘图标提示
+  // 监听事件
+  tray.on('click', e => {
+    console.log(123)
+  })
   //  可以设置 2秒之后，自动弹出托盘菜单 但是会显示在鼠标位置
   setTimeout(() => {
     const popUpMenu = Menu.buildFromTemplate(menus.slice(1))
