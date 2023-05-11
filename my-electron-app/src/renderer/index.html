@@ -1,16 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>系统托盘示例</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body></body>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="calculator.css">
+</head>
+
+<body>
+  <main class="container">
+    <fieldset class="calc">
+      <output id="output" data-value1="0" data-value2="0" data-operator data-lastkey>0</output>
+      <div id="input">
+        <div id="actions">
+          <button id="clear">C</button>
+          <button id="sign">+/-</button>
+          <button id="percent">%</button>
+        </div>
+        <div id="numbers">
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>5</button>
+          <button>6</button>
+          <button>7</button>
+          <button>8</button>
+          <button>9</button>
+          <button class="zero">0</button>
+          <button>.</button>
+        </div>
+        <div id="operators">
+          <button data-value="÷">÷</button>
+          <button data-value="×">×</button>
+          <button data-value="-">－</button>
+          <button data-value="+">＋</button>
+          <button data-value="=">＝</button>
+        </div>
+      </div>
+    </fieldset>
+  </main>
+  <script src="calculator.js"></script>
+</body>
+
 </html>

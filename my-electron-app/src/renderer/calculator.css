@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.a11y {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  font-size: 1px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.container {
+  overflow: hidden;
+  width: 300px;
+  color: #fff;
+  background: #57585a;
+  border-radius: 4px;
+}
+
+.calc button {
+  border: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 24px;
+  outline: none;
+}
+
+#output {
+  display: block;
+  padding: 0 16px;
+  height: 96px;
+  line-height: 96px;
+  font-size: 42px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+#input {
+  display: flex;
+  flex-flow: column wrap;
+  height: calc(65px * 5);
+}
+
+#actions {
+  display: flex;
+  width: 75%;
+  height: 20%;
+}
+
+#actions button {
+  width: calc(33.33% - 1px);
+  margin: 0 1px 1px 0;
+  background: #656769;
+}
+
+#numbers {
+  display: flex;
+  flex-flow: wrap;
+  width: 75%;
+  height: 80%;
+}
+
+#numbers button {
+  width: calc(33.33% - 1px);
+  height: calc(25% - 1px);
+  margin: 0 1px 1px 0;
+  background: #808082;
+}
+
+#numbers button.zero {
+  width: calc(66.66% - 1px);
+}
+
+#operators {
+  display: flex;
+  flex-flow: column;
+  width: 25%;
+  height: 100%;
+}
+
+#operators button {
+  height: calc(20% - 1px);
+  margin-bottom: 1px;
+  background: #fca02b;
+}
