@@ -34,33 +34,35 @@ onMounted(() => {
   const el = webview.value
   if (!el) return
   el.addEventListener('dom-ready', () => {
-    console.log('dom-ready')
+    // console.log('dom-ready')
     webviewDomReady.value = true
     updateNavigationState()
-    console.log('current url', el.getURL())
+    // console.log('current url', el.getURL())
+    const title = el.getTitle()
+    document.title = title === 'about:blank' ? 'Vite + Vue' : title
   })
   el.addEventListener('did-start-loading', event => {
-    console.log('did-start-loading', event)
+    // console.log('did-start-loading', event)
     updateNavigationState()
   })
   el.addEventListener('did-stop-loading', event => {
-    console.log('did-stop-loading', event)
+    // console.log('did-stop-loading', event)
     updateNavigationState()
   })
   el.addEventListener('did-start-navigation', event => {
-    console.log('did-start-navigation', event)
+    // console.log('did-start-navigation', event)
     updateNavigationState()
     if (event.url.startsWith('http')) {
       url.value = event.url
     }
   })
   el.addEventListener('will-navigate', event => {
-    console.log('will-navigate', event)
+    // console.log('will-navigate', event)
     url.value = event.url
     go()
   })
   el.addEventListener('new-window', event => {
-    console.log('will-navigate', event)
+    // console.log('will-navigate', event)
     url.value = event.url
     go()
   })
