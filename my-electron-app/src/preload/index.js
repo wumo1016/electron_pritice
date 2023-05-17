@@ -1,3 +1,8 @@
-const { contextBridge } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('preloadApi', {})
+contextBridge.exposeInMainWorld('preloadApi', {
+  save() {
+    const content = document.querySelector('#content').value
+    ipcRenderer.send('save', content)
+  }
+})

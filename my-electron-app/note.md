@@ -103,6 +103,13 @@ ipcRenderer.invoke('eventName', arg1, arg2)
 - 托盘菜单
 - Dock 菜单(mac os 专属)
 
+## 三种对话框
+
+- 选择对话框
+  - 用于选择电脑上的文件或目录
+- 保存对话框
+- 消息对话框
+
 ## 其他
 
 - node 版本 16.15.1

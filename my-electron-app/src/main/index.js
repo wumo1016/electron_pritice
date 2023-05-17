@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
+const fs = require('fs')
 
 let mainWindow,
   width = 1000,
@@ -17,14 +18,23 @@ function createWindow() {
     width,
     height,
     webPreferences: {
-      webviewTag: true, // 需要添加此行
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
       preload: path.join(__dirname, '../preload/index.js')
     }
   })
-  // mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
-  mainWindow.loadURL(' http://127.0.0.1:5173/')
+  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   mainWindow.webContents.openDevTools()
 }
+
+ipcMain.on('save', (e, value) => {
+  dialog
+    .showSaveDialog({
+      title: '请选择保存位置',
+      properties: ['openFile']
+    })
+    .then(async it => {
+      fs.writeFileSync(it.filePath, value)
+    })
+})
