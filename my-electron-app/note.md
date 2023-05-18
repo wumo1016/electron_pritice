@@ -110,6 +110,27 @@ ipcRenderer.invoke('eventName', arg1, arg2)
 - 保存对话框
 - 消息对话框
 
+## 快捷键
+
+- 全局快捷键
+  - 注册和取消注册
+    - 注册: register、registerAll
+    - 取消注册: unregister、unregisterAll
+- 局部快捷键
+  - 应用启动才生效
+  - 注册
+    - 使用自定义菜单
+    - 使用库 `electron-localshortcut`
+- 格式
+  - 有效的快捷键由多个功能键和一个键码中间用加号（+）组合而成
+  - 常见功能键
+    - `Cmd、Ctrl、CmdOrCtrl、Alt、Shift、Meta`
+  - 常见键码
+    - `0~9、A~Z、F1~F24、Space、Tab、Backspace、Delete、Enter、Esc 等`
+- 注意事项
+  - 如果快捷键字符串无效会直接报错，因此建议在使用此方法的时候加 try catch 语句，防止程序崩溃
+  - 该方法并不确保一定可以成功注册全局快捷键，因为有可能被电脑上的其他应用提前占用了，此时并不会报错，而是返回 false，因此我们可以通过返回值来判断快捷键是否注册成功
+
 ## 其他
 
 - node 版本 16.15.1
