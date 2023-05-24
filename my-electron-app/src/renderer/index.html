@@ -4,11 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>剪切板管理器</title>
     <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        padding: 10px;
+      }
+      .content {
+        border: 1px solid gray;
+        height: 600px;
+        margin-top: 10px;
+        display: flex;
+      }
+      .left {
+        width: 200px;
+        border-right: 1px solid gray;
+      }
+      li {
+        line-height: 32px;
+        padding: 0 10px;
+      }
+      .right {
+        width: calc(100% -200px);
+        overflow-y: auto;
+      }
     </style>
   </head>
   <body>
-    哈哈哈
+    <button onclick="preloadApi.read()">读取剪切板</button>
+    <button onclick="preloadApi.clear()">清空剪切板</button>
+    <div class="content">
+      <ul class="left"></ul>
+      <div class="right"></div>
+    </div>
   </body>
 </html>

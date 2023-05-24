@@ -112,11 +112,11 @@ ipcRenderer.invoke('eventName', arg1, arg2)
 
 ## 快捷键
 
-- 全局快捷键
+- 全局快捷键 globalShortcut
   - 注册和取消注册
     - 注册: register、registerAll
     - 取消注册: unregister、unregisterAll
-- 局部快捷键
+- 局部快捷键 localShortcut
   - 应用启动才生效
   - 注册
     - 使用自定义菜单
@@ -130,6 +130,17 @@ ipcRenderer.invoke('eventName', arg1, arg2)
 - 注意事项
   - 如果快捷键字符串无效会直接报错，因此建议在使用此方法的时候加 try catch 语句，防止程序崩溃
   - 该方法并不确保一定可以成功注册全局快捷键，因为有可能被电脑上的其他应用提前占用了，此时并不会报错，而是返回 false，因此我们可以通过返回值来判断快捷键是否注册成功
+
+## 剪切板 clipboard
+
+- 可以在主进程和渲染进程中调用(在渲染进程中 即 proload.js 脚本中, 必须是非沙箱环境下才能使用 clipboard 模块)
+- 常用方法
+  - availableFormats: 查看剪切板支持的数据格式
+  - readText 和 writeText: 从剪切板读取或写入纯文本数据
+  - readHTML 和 writeHTML: 从剪切板读取或写入 html 格式数据
+  - readImage 和 writeImage: 从剪切板读取或写入 html 格式数据
+  - readRTF 和 writeRTF: 从剪切板读取或写入 RTF 格式数据
+  - clear: 清空剪切板内容
 
 ## 其他
 
