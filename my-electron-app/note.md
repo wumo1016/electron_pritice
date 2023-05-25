@@ -142,6 +142,10 @@ ipcRenderer.invoke('eventName', arg1, arg2)
   - readRTF 和 writeRTF: 从剪切板读取或写入 RTF 格式数据
   - clear: 清空剪切板内容
 
+## 网络拦截
+
+- 只能在主进程中使用
+
 ## 其他
 
 - node 版本 16.15.1
