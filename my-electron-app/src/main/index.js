@@ -36,6 +36,16 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   mainWindow.webContents.openDevTools()
 
+  // protocol.interceptHttpProtocol('http', (request, callback) => {
+  //   const url = new URL(request.url)
+  //   url.searchParams.append('name', 'keliq') // 所有请求都会增加此参数
+  //   callback({
+  //     url: url.toString(),
+  //     method: request.method,
+  //     session: null // 防止死循环
+  //   })
+  // })
+
   protocol.registerFileProtocol('cached', (request, callback) => {
     if (request.url.includes('img/')) {
       const filename = request.url.split('/').pop()
