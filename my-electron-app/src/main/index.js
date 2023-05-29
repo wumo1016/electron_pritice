@@ -1,9 +1,18 @@
-const { app, BrowserWindow, ipcMain, session } = require('electron')
+const { app, BrowserWindow, ipcMain, protocol } = require('electron')
 const path = require('path')
+const fs = require('fs')
+const https = require('https')
 
 let mainWindow,
   width = 1200,
   height = 800
+
+// protocol.registerSchemesAsPrivileged([
+//   {
+//     scheme: 'hello',
+//     privileges: { standard: true }
+//   }
+// ])
 
 app.whenReady().then(() => {
   createWindow()
@@ -24,49 +33,36 @@ function createWindow() {
     }
   })
 
-  // 自定义UA
-  const { session } = require('electron')
-
-  const filters = {
-    urls: ['https://*.github.com/*']
-  }
-
-  session.defaultSession.webRequest.onBeforeSendHeaders(
-    filters,
-    (details, callback) => {
-      details.requestHeaders['User-Agent'] = 'MyAwesomeAgent'
-      callback({ requestHeaders: details.requestHeaders })
-    }
-  )
-
-  // 绕过跨域限制
-  const filter = {
-    urls: ['http://localhost:*/*']
-  }
-  win.webContents.session.webRequest.onHeadersReceived(
-    filter,
-    (details, callback) => {
-      const { responseHeaders } = details
-      responseHeaders['Access-Control-Allow-Origin'] = ['*']
-      callback({ responseHeaders })
-    }
-  )
-
-  // 请求转发
-  mainWindow.webContents.session.webRequest.onBeforeRequest(
-    {
-      urls: [
-        'https://dlweb.sogoucdn.com/pcsearch/web/index/images/logo_440x140_31de1d2.png?*'
-      ]
-    },
-    (details, callback) => {
-      callback({
-        redirectURL:
-          'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'
-      })
-    }
-  )
-
-  mainWindow.loadURL('https://sogou.com')
+  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   mainWindow.webContents.openDevTools()
+
+  protocol.registerFileProtocol('cached', (request, callback) => {
+    if (request.url.includes('img/')) {
+      const filename = request.url.split('/').pop()
+      const filePath = path.join(__dirname, '../img', filename)
+      if (fs.existsSync(filePath)) return callback(filePath)
+      console.log(filePath)
+      const file = fs.createWriteStream(filePath)
+      const fileURL = 'https://img.zlib.cn/' + filename
+      https.get(fileURL, res => {
+        res.pipe(file)
+        file.on('finish', () => callback(filePath))
+      })
+    } else {
+      const filePath = url.fileURLToPath(request.url)
+      callback(filePath)
+    }
+  })
+
+  protocol.registerFileProtocol('hello', (request, callback) => {
+    const relativePath = request.url
+      .replace(/^hello:\/\/host\//, '')
+      .replace(/\/?\?.*/, '')
+    const filePath = path.join(
+      __dirname,
+      request.url.includes('img') ? '../../src' : '../renderer',
+      relativePath
+    )
+    callback(filePath)
+  })
 }
