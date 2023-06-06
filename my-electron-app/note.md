@@ -146,6 +146,88 @@ ipcRenderer.invoke('eventName', arg1, arg2)
 
 - 只能在主进程中使用
 
+## 会话管理(session)
+
+- 获取
+  - session.defaultSession: 应用中的默认 session
+  - win.webContents.session: 某个 webContents 使用的 session, 如果在创建窗口的时候未指定, 就是默认 session
+- 创建(两种方式)
+
+```js
+// 指定一个 session 对象
+// cache默认是true 只是控制disk cache的(是否缓存到硬盘, 并非控制所有缓存-内存缓存、代码缓存等)
+// 如果 key 以 persist: 开头 那么整个应用都会使用这个持久化的session, 否则会使用内存中的 session
+const newSession = session.fromPartition('new', { cache: false })
+const win = new BrowserWindow({
+  width: 400,
+  height: 300,
+  webPreferences: { session: newSession }
+})
+win.loadURL('https://www.baidu.com')
+console.log(session.defaultSession === win.webContents.session) // false
+console.log(win.webContents.session === newSession) // true
+
+// 指定 partition 字符串
+win = new BrowserWindow({
+  width: 400,
+  height: 300,
+  webPreferences: { partition: 'new' }
+})
+win.loadURL('https://www.baidu.com')
+console.log(session.defaultSession === win.webContents.session) // false
+```
+
+- 设置代理
+- 资源加载(设置和获取预加载脚本)
+  - setPreloads: 设置 preload 脚本
+    - webPreferences 中的 preload 脚本只能设置一个
+    - setPreloads 不仅可以设置多个, 执行时机比 webPreferences 中的早
+    ```js
+    const newSession = session.fromPartition('new', { cache: false })
+    newSession.setPreloads([
+      path.join(__dirname, '../preload/p1.js'),
+      path.join(__dirname, '../preload/p2.js')
+    ])
+    ```
+  - getPreloads: 获取 preload 脚本
+- 本地存储
+
+  - getStoragePath: 获取存储陆军(内存会话返回 null)
+  - clearStorageData: 清空本地数据
+  - flushStorageData: 将所有数据持久化到磁盘
+
+  ```js
+  const newSession = session.fromPartition('new', { cache: false })
+  console.log(newSession.getStoragePath()) // null
+
+  const newSession = session.fromPartition('new', { cache: true })
+  console.log(newSession.getStoragePath()) // null
+
+  const newSession = session.fromPartition('persist:new', { cache: false })
+  console.log(newSession.getStoragePath()) // ~/Library/Application Support/electron-desktop/Partitions/new
+
+  const newSession = session.fromPartition('persist:new', { cache: true })
+  console.log(newSession.getStoragePath()) // ~/Library/Application Support/electron-desktop/Partitions/new
+  ```
+
+- 权限控制
+- 插件管理(可以加载 Chrome 插件)
+  - 方法
+    - loadExtension
+    - removeExtension
+    - getExtension
+    - getAllExtensions
+  - 事件
+    - extension-loaded
+    - extension-unloaded
+    - extension-ready
+- 文件下载
+- 操作 cookie
+  - get(包括 http-only 的也能拿到)
+  - set
+  - remove
+  - flushStore
+
 ## 其他
 
 - node 版本 16.15.1
