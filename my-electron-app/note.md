@@ -223,10 +223,26 @@ console.log(session.defaultSession === win.webContents.session) // false
     - extension-ready
 - 文件下载
 - 操作 cookie
+
   - get(包括 http-only 的也能拿到)
   - set
   - remove
   - flushStore
+
+  ```js
+  const defaultSession = mainWindow.webContents.session
+  // 写
+  defaultSession.cookies.set({
+    url: 'http://www.baidu.com',
+    name: 'username',
+    value: '小明'
+  })
+  // 获取
+  session.defaultSession.cookies.get({
+    url: 'http://www.baidu.com',
+    name: 'username'
+  })
+  ```
 
 ## 其他
 
