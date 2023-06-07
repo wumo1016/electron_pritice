@@ -27,9 +27,7 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   mainWindow.webContents.openDevTools()
 
-  // setInterval(() => {
-  //   console.log(powerMonitor.getSystemIdleTime())
-  // }, 1000)
-
-  console.log(powerMonitor.onBatteryPower)
+  setInterval(() => {
+    mainWindow.webContents.send('log-time', powerMonitor.getSystemIdleTime())
+  }, 1000)
 }

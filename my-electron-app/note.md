@@ -85,6 +85,13 @@ ipcRenderer.on('isDarkMode', (event, value) => {
 })
 ```
 
+```js
+// 主进程
+win.webContents.send
+// 渲染进程
+ipcRenderer.on
+```
+
 - invoke & handle (推荐)
 
 ```js
