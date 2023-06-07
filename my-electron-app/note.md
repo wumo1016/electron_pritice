@@ -244,6 +244,30 @@ console.log(session.defaultSession === win.webContents.session) // false
   })
   ```
 
+## 电源管理
+
+- powerMonitor
+  - 属性
+    - onBatteryPower: 效果同方法 isOnBatteryPower
+  - 方法
+    - getSystemIdleTime: 获取空闲时间
+    - isOnBatteryPower: 是否使用电池供电
+  - 事件
+    - lock-screen: 锁屏
+    - unlock-screen: 解锁
+    - suspend: 休眠
+    - resume: 唤醒
+- powerSaveBlocker
+  - 方法
+    - start: 阻止休眠
+      - 参数有以下可选值
+        - prevent-app-suspension: 保持系统活跃，但屏幕可以不亮
+        - prevent-display-sleep: 保持系统和屏幕活跃，屏幕要一直亮
+    - stop: 停止阻止行为
+      - 一个参数为 start 方法的返回值
+    - isStart: 查询阻止行为是否处于启用状态
+      - 一个参数为 start 方法的返回值
+
 ## 其他
 
 - node 版本 16.15.1

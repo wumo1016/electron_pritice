@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, session } = require('electron')
+const { app, BrowserWindow, ipcMain, powerMonitor } = require('electron')
 const path = require('path')
 
 let mainWindow,
@@ -13,7 +13,6 @@ app.whenReady().then(() => {
  * @Descripttion: 创建 window
  */
 function createWindow() {
-  const newSession = session.fromPartition('test')
   mainWindow = new BrowserWindow({
     width,
     height,
@@ -21,14 +20,16 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      preload: path.join(__dirname, '../preload/index.js'),
-      session: newSession
+      preload: path.join(__dirname, '../preload/index.js')
     }
   })
 
-  console.log(session.defaultSession === mainWindow.webContents.session)
-  console.log(newSession === mainWindow.webContents.session)
-
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   mainWindow.webContents.openDevTools()
+
+  // setInterval(() => {
+  //   console.log(powerMonitor.getSystemIdleTime())
+  // }, 1000)
+
+  console.log(powerMonitor.onBatteryPower)
 }
